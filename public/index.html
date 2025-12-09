@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sing-in</title>
+  </head>
+  <body>
+    <h1>Google</h1>
+    <div id="button-div"></div>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      var url = "http://localhost:3005/api/login/google";
+      function handleCredentialResponse(response) {
+        // console.log("id_token: " + response.credential);
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: response.credential }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log("Error: ", err);
+          });
+      }
+      window.onload = function () {
+        google.accounts.id.initialize({
+          client_id:
+            "123121648734-6fv8b3cjrv4gic6rc0ooirek87fj3eea.apps.googleusercontent.com",
+          callback: handleCredentialResponse,
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("button-div"),
+          { theme: "outline", size: "large" } // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+      };
+    </script>
+  </body>
+</html>
