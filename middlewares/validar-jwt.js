@@ -3,19 +3,22 @@ const Usuario = require("../models/usuario");
 
 const validarJWT = (req, res, next) => {
   const token = req.header("x-token");
-  if (!token) {
+
+  if (!token || token === "null" || token === "undefined") {
     return res.status(401).json({
       ok: false,
       msg: "No hay token en la petición",
     });
   }
+
   try {
-    const { uid } = jwt.verify(token, process.env.JWT_SECRET);
+    const { uid, email } = jwt.verify(token, process.env.JWT_SECRET);
     req.uid = uid;
+    req.email = email;
 
     next();
   } catch (error) {
-    console.log(error);
+    console.log("Error validando JWT:", error.message);
     return res.status(401).json({
       ok: false,
       msg: "Token no válido",
@@ -26,13 +29,17 @@ const validarJWT = (req, res, next) => {
 const validarAdminRole = async (req, res, next) => {
   const uid = req.uid;
   try {
-    const usuarioDB = await Usuario.findById(uid);
-    if (!usuarioDB) {
+    const usuarioResult = await Usuario.obtenerPorId(uid);
+
+    if (!usuarioResult || usuarioResult.length === 0) {
       return res.status(404).json({
         ok: false,
         msg: "Usuario no existe",
       });
     }
+
+    const usuarioDB = usuarioResult[0];
+
     if (usuarioDB.role !== "ADMIN_ROLE") {
       return res.status(403).json({
         ok: false,
@@ -53,14 +60,18 @@ const validarAdminRole_O_MismoUsuario = async (req, res, next) => {
   const uid = req.uid;
   const id = req.params.id;
   try {
-    const usuarioDB = await Usuario.findById(uid);
-    if (!usuarioDB) {
+    const usuarioResult = await Usuario.obtenerPorId(uid);
+
+    if (!usuarioResult || usuarioResult.length === 0) {
       return res.status(404).json({
         ok: false,
         msg: "Usuario no existe",
       });
     }
-    if (usuarioDB.role === "ADMIN_ROLE" || uid === id) {
+
+    const usuarioDB = usuarioResult[0];
+
+    if (usuarioDB.role === "ADMIN_ROLE" || uid == id) {
       next();
     } else {
       return res.status(403).json({

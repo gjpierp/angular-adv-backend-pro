@@ -1,0 +1,106 @@
+{
+  "info": {
+    "name": "API admin-sitio completa",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": { "method": "POST", "header": [], "url": { "raw": "{{baseUrl}}/api/login", "host": ["{{baseUrl}}"], "path": ["api", "login"] }, "body": { "mode": "raw", "raw": "{\n  \"correo_electronico\": \"user@example.com\",\n  \"contrasena\": \"123456\"\n}" } }, "response": []
+        },
+        { "name": "Google SignIn", "request": { "method": "POST", "header": [], "url": { "raw": "{{baseUrl}}/api/login/google", "host": ["{{baseUrl}}"], "path": ["api", "login", "google"] }, "body": { "mode": "raw", "raw": "{\n  \"token\": \"GOOGLE_TOKEN\"\n}" } }, "response": [] },
+        { "name": "Facebook SignIn", "request": { "method": "POST", "header": [], "url": { "raw": "{{baseUrl}}/api/login/facebook", "host": ["{{baseUrl}}"], "path": ["api", "login", "facebook"] }, "body": { "mode": "raw", "raw": "{\n  \"accessToken\": \"FACEBOOK_TOKEN\"\n}" } }, "response": [] },
+        { "name": "Renew Token", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/login/renew", "host": ["{{baseUrl}}"], "path": ["api", "login", "renew"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        { "name": "Listar usuarios", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/usuarios", "host": ["{{baseUrl}}"], "path": ["api", "usuarios"] } }, "response": [] },
+        { "name": "Crear usuario", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/usuarios", "host": ["{{baseUrl}}"], "path": ["api", "usuarios"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre_usuario\": \"nuevo\",\n  \"contrasena\": \"123456\",\n  \"correo_electronico\": \"nuevo@correo.com\",\n  \"nombres\": \"Nombre\",\n  \"apellidos\": \"Apellido\"\n}" } }, "response": [] },
+        { "name": "Actualizar usuario", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre_usuario\": \"editado\"\n}" } }, "response": [] },
+        { "name": "Eliminar usuario", "request": { "method": "DELETE", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1"] } }, "response": [] },
+        { "name": "Asignar roles", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1/roles", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1", "roles"] }, "body": { "mode": "raw", "raw": "{\n  \"roles\": [1,2]\n}" } }, "response": [] },
+        { "name": "Obtener roles usuario", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1/roles", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1", "roles"] } }, "response": [] },
+        { "name": "Obtener permisos usuario", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1/permisos", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1", "permisos"] } }, "response": [] },
+        { "name": "Cambiar contraseña", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1/cambiar-contrasena", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1", "cambiar-contrasena"] }, "body": { "mode": "raw", "raw": "{\n  \"contrasena_actual\": \"123456\",\n  \"contrasena_nueva\": \"654321\"\n}" } }, "response": [] },
+        { "name": "Resetear contraseña", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/usuarios/1/resetear-contrasena", "host": ["{{baseUrl}}"], "path": ["api", "usuarios", "1", "resetear-contrasena"] }, "body": { "mode": "raw", "raw": "{\n  \"contrasena_nueva\": \"654321\"\n}" } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        { "name": "Listar roles", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/roles", "host": ["{{baseUrl}}"], "path": ["api", "roles"] } }, "response": [] },
+        { "name": "Crear rol", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/roles", "host": ["{{baseUrl}}"], "path": ["api", "roles"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"admin\"\n}" } }, "response": [] },
+        { "name": "Actualizar rol", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/roles/1", "host": ["{{baseUrl}}"], "path": ["api", "roles", "1"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"admin-editado\"\n}" } }, "response": [] },
+        { "name": "Eliminar rol", "request": { "method": "DELETE", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/roles/1", "host": ["{{baseUrl}}"], "path": ["api", "roles", "1"] } }, "response": [] },
+        { "name": "Asignar permisos", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/roles/1/permisos", "host": ["{{baseUrl}}"], "path": ["api", "roles", "1", "permisos"] }, "body": { "mode": "raw", "raw": "{\n  \"permisos\": [1,2]\n}" } }, "response": [] },
+        { "name": "Obtener permisos rol", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/roles/1/permisos", "host": ["{{baseUrl}}"], "path": ["api", "roles", "1", "permisos"] } }, "response": [] },
+        { "name": "Obtener usuarios rol", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/roles/1/usuarios", "host": ["{{baseUrl}}"], "path": ["api", "roles", "1", "usuarios"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Permisos",
+      "item": [
+        { "name": "Listar permisos", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/permisos", "host": ["{{baseUrl}}"], "path": ["api", "permisos"] } }, "response": [] },
+        { "name": "Crear permiso", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/permisos", "host": ["{{baseUrl}}"], "path": ["api", "permisos"] }, "body": { "mode": "raw", "raw": "{\n  \"codigo\": \"PERMISO_NUEVO\"\n}" } }, "response": [] },
+        { "name": "Actualizar permiso", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/permisos/1", "host": ["{{baseUrl}}"], "path": ["api", "permisos", "1"] }, "body": { "mode": "raw", "raw": "{\n  \"codigo\": \"PERMISO_EDITADO\"\n}" } }, "response": [] },
+        { "name": "Eliminar permiso", "request": { "method": "DELETE", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/permisos/1", "host": ["{{baseUrl}}"], "path": ["api", "permisos", "1"] } }, "response": [] },
+        { "name": "Obtener roles de permiso", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/permisos/1/roles", "host": ["{{baseUrl}}"], "path": ["api", "permisos", "1", "roles"] } }, "response": [] },
+        { "name": "Obtener menús de permiso", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/permisos/1/menus", "host": ["{{baseUrl}}"], "path": ["api", "permisos", "1", "menus"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Menús",
+      "item": [
+        { "name": "Listar menús", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/menus", "host": ["{{baseUrl}}"], "path": ["api", "menus"] } }, "response": [] },
+        { "name": "Obtener árbol de menús", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/menus/arbol", "host": ["{{baseUrl}}"], "path": ["api", "menus", "arbol"] } }, "response": [] },
+        { "name": "Obtener menús usuario", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/menus/usuario", "host": ["{{baseUrl}}"], "path": ["api", "menus", "usuario"] } }, "response": [] },
+        { "name": "Crear menú", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/menus", "host": ["{{baseUrl}}"], "path": ["api", "menus"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Menú nuevo\",\n  \"nivel\": 1\n}" } }, "response": [] },
+        { "name": "Actualizar menú", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/menus/1", "host": ["{{baseUrl}}"], "path": ["api", "menus", "1"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Menú editado\"\n}" } }, "response": [] },
+        { "name": "Eliminar menú", "request": { "method": "DELETE", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/menus/1", "host": ["{{baseUrl}}"], "path": ["api", "menus", "1"] } }, "response": [] },
+        { "name": "Asignar permisos a menú", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/menus/1/permisos", "host": ["{{baseUrl}}"], "path": ["api", "menus", "1", "permisos"] }, "body": { "mode": "raw", "raw": "{\n  \"permisos\": [1,2]\n}" } }, "response": [] },
+        { "name": "Obtener permisos de menú", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/menus/1/permisos", "host": ["{{baseUrl}}"], "path": ["api", "menus", "1", "permisos"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "item": [
+        { "name": "Subir archivo imagen", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/uploads/usuarios/1", "host": ["{{baseUrl}}"], "path": ["api", "uploads", "usuarios", "1"] }, "body": { "mode": "formdata", "formdata": [ { "key": "imagen", "type": "file" } ] } }, "response": [] },
+        { "name": "Carga masiva", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/uploads/masiva", "host": ["{{baseUrl}}"], "path": ["api", "uploads", "masiva"] }, "body": { "mode": "formdata", "formdata": [ { "key": "archivo", "type": "file" } ] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Búsquedas",
+      "item": [
+        { "name": "Buscar usuarios", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/todo/juan", "host": ["{{baseUrl}}"], "path": ["api", "todo", "juan"] } }, "response": [] },
+        { "name": "Buscar en colección usuarios", "request": { "method": "GET", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/todo/coleccion/usuarios/juan", "host": ["{{baseUrl}}"], "path": ["api", "todo", "coleccion", "usuarios", "juan"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Territorios",
+      "item": [
+        { "name": "Listar continentes", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/continentes", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "continentes"] } }, "response": [] },
+        { "name": "Obtener continente", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/continentes/1", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "continentes", "1"] } }, "response": [] },
+        { "name": "Listar países", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/paises", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "paises"] } }, "response": [] },
+        { "name": "Obtener país", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/paises/1", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "paises", "1"] } }, "response": [] },
+        { "name": "Obtener país por código", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/paises/codigo/CO", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "paises", "codigo", "CO"] } }, "response": [] },
+        { "name": "Obtener estructura país", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/paises/1/estructura", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "paises", "1", "estructura"] } }, "response": [] },
+        { "name": "Listar divisiones", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones"] } }, "response": [] },
+        { "name": "Buscar divisiones", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/buscar?q=bogota", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "buscar"], "query": [ { "key": "q", "value": "bogota" } ] } }, "response": [] },
+        { "name": "Obtener división", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/1", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "1"] } }, "response": [] },
+        { "name": "Obtener división completa", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/1/completo", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "1", "completo"] } }, "response": [] },
+        { "name": "Obtener jerarquía división", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/1/jerarquia", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "1", "jerarquia"] } }, "response": [] },
+        { "name": "Obtener ruta división", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/1/ruta", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "1", "ruta"] } }, "response": [] },
+        { "name": "Crear país", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/territorios/paises", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "paises"] }, "body": { "mode": "raw", "raw": "{\n  \"id_continente\": 1,\n  \"nombre_pais\": \"Colombia\",\n  \"codigo_iso_alpha2\": \"CO\",\n  \"codigo_iso_alpha3\": \"COL\"\n}" } }, "response": [] },
+        { "name": "Actualizar país", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/territorios/paises/1", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "paises", "1"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre_pais\": \"Colombia Editada\"\n}" } }, "response": [] },
+        { "name": "Crear división", "request": { "method": "POST", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones"] }, "body": { "mode": "raw", "raw": "{\n  \"id_pais\": 1,\n  \"id_tipo_division\": 1,\n  \"nombre_division\": \"Cundinamarca\",\n  \"nivel\": 1\n}" } }, "response": [] },
+        { "name": "Actualizar división", "request": { "method": "PUT", "header": [ { "key": "x-token", "value": "{{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/1", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "1"] }, "body": { "mode": "raw", "raw": "{\n  \"nombre_division\": \"Cundinamarca Editada\"\n}" } }, "response": [] },
+        { "name": "Eliminar división", "request": { "method": "DELETE", "header": [ { "key": "x-token", "value": "{{jwt}}" } ], "url": { "raw": "{{baseUrl}}/api/territorios/divisiones/1", "host": ["{{baseUrl}}"], "path": ["api", "territorios", "divisiones", "1"] } }, "response": [] }
+      ]
+    }
+  ]
+}
